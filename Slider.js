@@ -184,7 +184,7 @@ var Slider = React.createClass({
     var touchOverflowStyle = this._getTouchOverflowStyle();
 
     return (
-      <View {...other} style={[mainStyles.container, style]} onLayout={this._measureContainer}>
+      <View {...other} style={[mainStyles.container, style, {transform:[{rotate: '-90deg'}]}]} onLayout={this._measureContainer}>
         <View
           style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle]}
           onLayout={this._measureTrack} />
@@ -263,7 +263,7 @@ var Slider = React.createClass({
   _getValue(gestureState: Object) {
     var length = this.state.containerSize.width - this.state.thumbSize.width;
     var thumbLeft = Math.min(length,
-      Math.max(0, this.state.previousLeft + gestureState.dy));
+      Math.max(0, this.state.previousLeft - gestureState.dy));
 
     var ratio = thumbLeft / length;
     return ratio * (this.props.maximumValue - this.props.minimumValue) + this.props.minimumValue;
