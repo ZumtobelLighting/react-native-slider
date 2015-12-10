@@ -263,7 +263,7 @@ var Slider = React.createClass({
   _getValue(gestureState: Object) {
     var length = this.state.containerSize.width - this.state.thumbSize.width;
     var thumbLeft = Math.min(length,
-      Math.max(0, this.state.previousLeft + gestureState.dx));
+      Math.max(0, this.state.previousLeft + gestureState.dy));
 
     var ratio = thumbLeft / length;
     return ratio * (this.props.maximumValue - this.props.minimumValue) + this.props.minimumValue;
