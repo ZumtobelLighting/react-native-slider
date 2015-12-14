@@ -184,7 +184,8 @@ var Slider = React.createClass({
     var touchOverflowStyle = this._getTouchOverflowStyle();
 
     return (
-      <View {...other} style={[mainStyles.container, style, {transform:[{rotate: '-90deg'}]}]} onLayout={this._measureContainer}>
+      <View style={{transform:[{rotate: '-90deg'}]}}>
+      <View {...other} style={[mainStyles.container, style]} onLayout={this._measureContainer}>
         <View
           style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle]}
           onLayout={this._measureTrack} />
@@ -202,6 +203,7 @@ var Slider = React.createClass({
           {...this._panResponder.panHandlers}>
           {debugTouchArea === true && this._renderDebugThumbTouchRect()}
         </View>
+      </View>
       </View>
     );
   },
