@@ -184,7 +184,7 @@ var Slider = React.createClass({
     var touchOverflowStyle = this._getTouchOverflowStyle();
 
     return (
-      <View {...other} style={[mainStyles.container, style]} onLayout={this._measureContainer}>
+      <View {...other} style={[mainStyles.container, style,{transform:[{rotate: '-90deg'}]}]} onLayout={this._measureContainer}>
         <View
           style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle,{transform:[{rotate: '-90deg'}]}]}
           onLayout={this._measureTrack} />
