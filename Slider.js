@@ -184,21 +184,21 @@ var Slider = React.createClass({
     var touchOverflowStyle = this._getTouchOverflowStyle();
 
     return (
-      <View {...other} style={[mainStyles.container, style,{transform:[{rotate: '-90deg'}]}]} onLayout={this._measureContainer}>
+      <View {...other} style={[mainStyles.container, style, {transform:[{rotate: '-90deg'}]}]} onLayout={this._measureContainer}>
         <View
-          style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle,{transform:[{rotate: '-90deg'}]}]}
+          style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle]}
           onLayout={this._measureTrack} />
-        <View style={[mainStyles.track, trackStyle, minimumTrackStyle,{transform:[{rotate: '-90deg'}]}]} />
+        <View style={[mainStyles.track, trackStyle, minimumTrackStyle]} />
         <View
           ref={(thumb) => this.thumb = thumb}
           onLayout={this._measureThumb}
           style={[
             {backgroundColor: thumbTintColor, marginTop: -(trackSize.height + thumbSize.height) / 2},
-            mainStyles.thumb, thumbStyle, {left: thumbLeft, ...valueVisibleStyle},{transform:[{rotate: '-90deg'}]}
+            mainStyles.thumb, thumbStyle, {left: thumbLeft, ...valueVisibleStyle}
           ]}
         />
         <View
-          style={[defaultStyles.touchArea, touchOverflowStyle,{transform:[{rotate: '-90deg'}]}]}
+          style={[defaultStyles.touchArea, touchOverflowStyle]}
           {...this._panResponder.panHandlers}>
           {debugTouchArea === true && this._renderDebugThumbTouchRect()}
         </View>
