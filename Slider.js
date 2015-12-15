@@ -282,10 +282,8 @@ var Slider = React.createClass({
     var size = {};
     if (state.containerSize.width !== undefined
         && state.thumbSize.width !== undefined) {
-      size.width = Math.max(0, props.thumbTouchSize.width - state.thumbSize.width);
-      size.height = Math.max(0, props.thumbTouchSize.height - state.containerSize.height);
-      // size.width = Math.max(0, props.thumbTouchSize.width - state.containerSize.width);
-      // size.height = Math.max(0, state.containerSize.height - state.thumbSize.height);
+      size.width = Math.max(0, props.thumbTouchSize.width - state.containerSize.width);
+      size.height = Math.max(0, state.containerSize.height - state.thumbSize.height);
     }
 
     return size;
