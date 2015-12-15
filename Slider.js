@@ -174,7 +174,6 @@ var Slider = React.createClass({
       justifyContent: 'center',
       width: 2, // needed to workaround a bug for borderRadius
       marginTop: 0,
-      marginLeft: style.width / 2 || THUMB_SIZE / 2,
       backgroundColor: minimumTrackTintColor,
       ...valueVisibleStyle
     };
@@ -185,18 +184,20 @@ var Slider = React.createClass({
 
     var touchOverflowStyle = this._getTouchOverflowStyle();
 
+    var leftOff = (style.width - thumbSize.width + trackSize.width) / 2;
     return (
       <View {...other} style={[mainStyles.container, style]} onLayout={this._measureContainer}>
         <View
-          style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle]}
+          style={[{backgroundColor: maximumTrackTintColor}, mainStyles.track, trackStyle, { height: style.height, marginLeft: style.width / 2 || THUMB_SIZE / 2 }]}
           onLayout={this._measureTrack} />
-        <View style={[mainStyles.track, trackStyle, minimumTrackStyle]} />
+        <View style={[mainStyles.track, trackStyle, minimumTrackStyle, { marginLeft: style.width / 2 || THUMB_SIZE / 2 }
+        ]} />
         <View
           ref={(thumb) => this.thumb = thumb}
           onLayout={this._measureThumb}
           style={[
             {backgroundColor: thumbTintColor},
-            mainStyles.thumb, thumbStyle, {bottom: thumbLeft, left: (style.width - thumbSize.width) / 2}
+            mainStyles.thumb, thumbStyle, {bottom: thumbLeft, left: leftOff}
           ]}
         />
         <View
