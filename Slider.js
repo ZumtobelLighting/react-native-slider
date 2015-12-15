@@ -193,8 +193,8 @@ var Slider = React.createClass({
           ref={(thumb) => this.thumb = thumb}
           onLayout={this._measureThumb}
           style={[
-            {backgroundColor: thumbTintColor, marginTop: -(trackSize.height + thumbSize.height) / 2},
-            mainStyles.thumb, thumbStyle, {left: thumbLeft, ...valueVisibleStyle}
+            {backgroundColor: thumbTintColor, marginLeft: -(trackSize.width + thumbSize.width) / 2},
+            mainStyles.thumb, thumbStyle, {bottom: thumbLeft, ...valueVisibleStyle}
           ]}
         />
         <View
@@ -241,7 +241,7 @@ var Slider = React.createClass({
 
   _measureTrack(x: Object) {
     var {width, height} = x.nativeEvent.layout;
-    var trackSize = {width: height, height: width};
+    var trackSize = {width: width, height: height};
     this.setState({ trackSize: trackSize });
   },
 
