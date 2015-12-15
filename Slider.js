@@ -241,7 +241,7 @@ var Slider = React.createClass({
 
   _measureTrack(x: Object) {
     var {width, height} = x.nativeEvent.layout;
-    var trackSize = {width: width, height: height};
+    var trackSize = {width: height, height: width};
     this.setState({ trackSize: trackSize });
   },
 
