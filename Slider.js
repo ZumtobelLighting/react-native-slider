@@ -172,13 +172,13 @@ var Slider = React.createClass({
     var minimumTrackStyle = {
       position: 'absolute',
       width: 300, // needed to workaround a bug for borderRadius
-      marginTop: -trackSize.height,
+      marginTop: -trackSize.width,
       backgroundColor: minimumTrackTintColor,
       ...valueVisibleStyle
     };
 
     if (thumbLeft >= 0 && thumbSize.width >= 0) {
-      minimumTrackStyle.width = thumbLeft + thumbSize.width / 2;
+      minimumTrackStyle.width = thumbLeft + thumbSize.height / 2;
     }
 
     var touchOverflowStyle = this._getTouchOverflowStyle();
@@ -193,7 +193,7 @@ var Slider = React.createClass({
           ref={(thumb) => this.thumb = thumb}
           onLayout={this._measureThumb}
           style={[
-            {backgroundColor: thumbTintColor, marginTop: -(trackSize.height + thumbSize.height) / 2},
+            {backgroundColor: thumbTintColor, marginTop: -(trackSize.width + thumbSize.width) / 2},
             mainStyles.thumb, thumbStyle, {left: thumbLeft, ...valueVisibleStyle}
           ]}
         />
@@ -257,11 +257,11 @@ var Slider = React.createClass({
 
   _getThumbLeft(value: number) {
     var ratio = this._getRatio(value);
-    return ratio * (this.state.containerSize.width - this.state.thumbSize.width);
+    return ratio * (this.state.containerSize.height - this.state.thumbSize.height);
   },
 
   _getValue(gestureState: Object) {
-    var length = this.state.containerSize.width - this.state.thumbSize.width;
+    var length = this.state.containerSize.height - this.state.thumbSize.height;
     var thumbLeft = Math.min(length,
       Math.max(0, this.state.previousLeft - gestureState.dy));
 
