@@ -324,8 +324,8 @@ var Slider = React.createClass({
     var touchOverflowSize = this._getTouchOverflowSize();
 
     return new Rect(
-      touchOverflowSize.width / 2 + this._getThumbLeft(state.value) + (state.thumbSize.width - props.thumbTouchSize.width) / 2,
       touchOverflowSize.height / 2 + (state.containerSize.height - props.thumbTouchSize.height) / 2,
+      touchOverflowSize.width / 2 + this._getThumbLeft(state.value) + (state.thumbSize.width - props.thumbTouchSize.width) / 2,
       props.thumbTouchSize.width,
       props.thumbTouchSize.height
     );
@@ -353,7 +353,7 @@ var Slider = React.createClass({
 var defaultStyles = StyleSheet.create({
   container: {
     height: 40,
-    // justifyContent: 'center',
+    justifyContent: 'center',
   },
   track: {
     height: TRACK_SIZE,
