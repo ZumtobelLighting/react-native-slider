@@ -172,7 +172,7 @@ var Slider = React.createClass({
     var minimumTrackStyle = {
       position: 'absolute',
       width: 300, // needed to workaround a bug for borderRadius
-      marginTop: -trackSize.width,
+      marginTop: 0,
       backgroundColor: minimumTrackTintColor,
       ...valueVisibleStyle
     };
