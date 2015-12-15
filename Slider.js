@@ -324,10 +324,10 @@ var Slider = React.createClass({
     var touchOverflowSize = this._getTouchOverflowSize();
 
     return new Rect(
-      touchOverflowSize.width / 2 + this._getThumbLeft(state.value) + (state.thumbSize.width - props.thumbTouchSize.width) / 2,
       touchOverflowSize.height / 2 + (state.containerSize.height - props.thumbTouchSize.height) / 2,
-      props.thumbTouchSize.width,
+      touchOverflowSize.width / 2 + this._getThumbLeft(state.value) + (state.thumbSize.width - props.thumbTouchSize.width) / 2,
       props.thumbTouchSize.height
+      props.thumbTouchSize.width,
     );
   },
 
