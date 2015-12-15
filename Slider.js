@@ -171,14 +171,16 @@ var Slider = React.createClass({
 
     var minimumTrackStyle = {
       position: 'absolute',
-      width: 300, // needed to workaround a bug for borderRadius
+      justifyContent: 'center',
+      width: 2, // needed to workaround a bug for borderRadius
       marginTop: 0,
+      marginLeft: style.width / 2 || THUMB_SIZE / 2,
       backgroundColor: minimumTrackTintColor,
       ...valueVisibleStyle
     };
 
-    if (thumbLeft >= 0 && thumbSize.width >= 0) {
-      minimumTrackStyle.width = thumbLeft + thumbSize.width / 2;
+    if (thumbLeft >= 0 && thumbSize.height >= 0) {
+      minimumTrackStyle.height = thumbLeft + thumbSize.height / 2;
     }
 
     var touchOverflowStyle = this._getTouchOverflowStyle();
@@ -193,8 +195,8 @@ var Slider = React.createClass({
           ref={(thumb) => this.thumb = thumb}
           onLayout={this._measureThumb}
           style={[
-            {backgroundColor: thumbTintColor, marginLeft: (trackSize.width + thumbSize.width) / 2},
-            mainStyles.thumb, thumbStyle, {bottom: thumbLeft, ...valueVisibleStyle}
+            {backgroundColor: thumbTintColor},
+            mainStyles.thumb, thumbStyle, {bottom: thumbLeft, left: (style.width - thumbSize.width) / 2}
           ]}
         />
         <View
@@ -323,7 +325,7 @@ var Slider = React.createClass({
     var touchOverflowSize = this._getTouchOverflowSize();
 
     return new Rect(
-      touchOverflowSize.width / 2 + (state.thumbSize.width - props.thumbTouchSize.width) / 2,
+      touchOverflowSize.width / 2 + (state.containerSize.width - props.thumbTouchSize.width) / 2,
       touchOverflowSize.height / 2 - this._getThumbLeft(state.value) +(state.containerSize.height - props.thumbTouchSize.height) / 2,
       props.thumbTouchSize.width,
       props.thumbTouchSize.height
@@ -355,6 +357,9 @@ var defaultStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   track: {
+    position: 'absolute',
+    bottom: 0,
+    width: 2,
     height: TRACK_SIZE,
     borderRadius: TRACK_SIZE / 2,
   },
