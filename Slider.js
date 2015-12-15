@@ -12,18 +12,18 @@ var {
 var TRACK_SIZE = 4;
 var THUMB_SIZE = 20;
 
-function Rect(x, y, width, height) {
+function Rect(x, y, height, width) {
   this.x = x;
   this.y = y;
-  this.width = width;
   this.height = height;
+  this.width = width;
 }
 
 Rect.prototype.containsPoint = function(x, y) {
   return (x >= this.x
           && y >= this.y
-          && x <= this.x + this.width
-          && y <= this.y + this.height);
+          && x <= this.x + this.height
+          && y <= this.y + this.width);
 };
 
 var Slider = React.createClass({
@@ -70,10 +70,10 @@ var Slider = React.createClass({
      * The touch area has the same center has the visible thumb.
      * This allows to have a visually small thumb while still allowing the user
      * to move it easily.
-     * The default is {width: 40, height: 40}.
+     * The default is {height: 40, width: 40}.
      */
     thumbTouchSize: PropTypes.shape(
-      {width: PropTypes.number, height: PropTypes.number}
+      {height: PropTypes.number, width: PropTypes.number}
     ),
 
     /**
@@ -115,9 +115,9 @@ var Slider = React.createClass({
   },
   getInitialState() {
     return {
-      containerSize: { width: 0, height: 0 },
-      trackSize: { width: 0, height: 0 },
-      thumbSize: { width: 0, height: 0 },
+      containerSize: { height: 0, width: 0 },
+      trackSize: { height: 0, width: 0 },
+      thumbSize: { height: 0, width: 0 },
       previousLeft: 0,
       value: this.props.value,
     };
@@ -130,7 +130,7 @@ var Slider = React.createClass({
       minimumTrackTintColor: '#3f3f3f',
       maximumTrackTintColor: '#b3b3b3',
       thumbTintColor: '#343434',
-      thumbTouchSize: {width: 40, height: 40},
+      thumbTouchSize: {height: 40, width: 40},
       debugTouchArea: false,
     };
   },
@@ -163,22 +163,22 @@ var Slider = React.createClass({
     var mainStyles = styles || defaultStyles;
     var thumbLeft = this._getThumbLeft(value);
     var valueVisibleStyle = {};
-    if (containerSize.width === undefined
-        || trackSize.width === undefined
-        || thumbSize.width === undefined) {
+    if (containerSize.height === undefined
+        || trackSize.height === undefined
+        || thumbSize.height === undefined) {
       valueVisibleStyle.opacity = 0;
     }
 
     var minimumTrackStyle = {
       position: 'absolute',
-      width: 300, // needed to workaround a bug for borderRadius
+      height: 300, // needed to workaround a bug for borderRadius
       marginTop: -trackSize.width,
       backgroundColor: minimumTrackTintColor,
       ...valueVisibleStyle
     };
 
-    if (thumbLeft >= 0 && thumbSize.width >= 0) {
-      minimumTrackStyle.width = thumbLeft + thumbSize.height / 2;
+    if (thumbLeft >= 0 && thumbSize.height >= 0) {
+      minimumTrackStyle.height = thumbLeft + thumbSize.height / 2;
     }
 
     var touchOverflowStyle = this._getTouchOverflowStyle();
@@ -234,20 +234,20 @@ var Slider = React.createClass({
   },
 
   _measureContainer(x: Object) {
-    var {width, height} = x.nativeEvent.layout;
-    var containerSize = {width: width, height: height};
+    var {height, width} = x.nativeEvent.layout;
+    var containerSize = {height: height, width: width};
     this.setState({ containerSize: containerSize });
   },
 
   _measureTrack(x: Object) {
-    var {width, height} = x.nativeEvent.layout;
-    var trackSize = {width: width, height: height};
+    var {height, width} = x.nativeEvent.layout;
+    var trackSize = {height: height, width: width};
     this.setState({ trackSize: trackSize });
   },
 
   _measureThumb(x: Object) {
-    var {width, height} = x.nativeEvent.layout;
-    var thumbSize = {width: width, height: height};
+    var {height, width} = x.nativeEvent.layout;
+    var thumbSize = {height: height, width: width};
     this.setState({ thumbSize: thumbSize });
   },
 
@@ -280,26 +280,26 @@ var Slider = React.createClass({
     var props = this.props;
 
     var size = {};
-    if (state.containerSize.width !== undefined
-        && state.thumbSize.width !== undefined) {
+    if (state.containerSize.height !== undefined
+        && state.thumbSize.height !== undefined) {
 
-      size.width = Math.max(0, props.thumbTouchSize.width - state.thumbSize.width);
-      size.height = Math.max(0, props.thumbTouchSize.height - state.containerSize.height);
+      size.height = Math.max(0, props.thumbTouchSize.height - state.thumbSize.height);
+      size.width = Math.max(0, props.thumbTouchSize.width - state.containerSize.width);
     }
 
     return size;
   },
 
   _getTouchOverflowStyle() {
-    var {width, height} = this._getTouchOverflowSize();
+    var {height, width} = this._getTouchOverflowSize();
 
     var touchOverflowStyle = {};
-    if (width !== undefined && height !== undefined) {
-      var verticalMargin = -height / 2;
+    if (height !== undefined && width !== undefined) {
+      var verticalMargin = -width / 2;
       touchOverflowStyle.marginTop = verticalMargin;
       touchOverflowStyle.marginBottom = verticalMargin;
 
-      var horizontalMargin = -width / 2;
+      var horizontalMargin = -height / 2;
       touchOverflowStyle.marginLeft = horizontalMargin;
       touchOverflowStyle.marginRight = horizontalMargin;
     }
@@ -324,10 +324,10 @@ var Slider = React.createClass({
     var touchOverflowSize = this._getTouchOverflowSize();
 
     return new Rect(
-      touchOverflowSize.width / 2 + this._getThumbLeft(state.value) + (state.thumbSize.width - props.thumbTouchSize.width) / 2,
-      touchOverflowSize.height / 2 + (state.containerSize.height - props.thumbTouchSize.height) / 2,
-      props.thumbTouchSize.width,
-      props.thumbTouchSize.height
+      touchOverflowSize.height / 2 + this._getThumbLeft(state.value) + (state.thumbSize.height - props.thumbTouchSize.height) / 2,
+      touchOverflowSize.width / 2 + (state.containerSize.width - props.thumbTouchSize.width) / 2,
+      props.thumbTouchSize.height,
+      props.thumbTouchSize.width
     );
   },
 
@@ -336,8 +336,8 @@ var Slider = React.createClass({
     var positionStyle = {
       left: thumbTouchRect.x,
       top: thumbTouchRect.y,
-      width: thumbTouchRect.width,
       height: thumbTouchRect.height,
+      width: thumbTouchRect.width,
     };
 
     return (
@@ -352,17 +352,17 @@ var Slider = React.createClass({
 
 var defaultStyles = StyleSheet.create({
   container: {
-    height: 40,
+    width: 40,
     justifyContent: 'center',
   },
   track: {
-    height: TRACK_SIZE,
+    width: TRACK_SIZE,
     borderRadius: TRACK_SIZE / 2,
   },
   thumb: {
     position: 'absolute',
-    width: THUMB_SIZE,
     height: THUMB_SIZE,
+    width: THUMB_SIZE,
     borderRadius: THUMB_SIZE / 2,
   },
   touchArea: {
