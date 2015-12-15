@@ -353,7 +353,7 @@ var Slider = React.createClass({
 var defaultStyles = StyleSheet.create({
   container: {
     height: 40,
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   track: {
     height: TRACK_SIZE,
